@@ -1,6 +1,11 @@
+import FormLogin from '../../components/FormLogin';
+
 const Login = () => {
     return(
-        <h1>Login</h1>
+        <>
+            <h1>Login</h1>
+            <FormLogin/>
+        </>
     )
 }
 
