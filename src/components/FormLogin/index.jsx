@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useHistory } from 'react-router';
-import api from '../../services/api';
+import axios from 'axios';
 
 const FormLogin = () => {
 
@@ -26,7 +26,7 @@ const FormLogin = () => {
 
     const handleForm = (data) => {
         console.log(data);
-        api.post('/sessions', data).then((response) => {
+        axios.post('https://kenziehub.me/sessions', data).then((response) => {
             console.log(response);
             localStorage.clear();
             const { token } = response.data;
