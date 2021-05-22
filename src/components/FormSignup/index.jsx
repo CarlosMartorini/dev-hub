@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useHistory } from 'react-router';
-import api from '../../services/api';
+import axios from 'axios';
 
 const FormSignup = () => {
 
@@ -12,8 +12,9 @@ const FormSignup = () => {
     const schema = yup.object().shape({
         name: yup.string().required('Name is required!'),
         email: yup.string().email().required('Email is required!'),
-        cellphone: yup.string(),
-        courseModule: yup.string().required('Course module is required!'),
+        bio: yup.string().required('Bio is riquered!'),
+        contact: yup.string().required('Contact is required!'),
+        course_module: yup.string().required('Course module is required!'),
         password: yup
         .string()
         .min(8, 'Minimum 8 characters!')
@@ -30,8 +31,8 @@ const FormSignup = () => {
 
     const handleForm = (data) => {
         console.log(data);
-        api.post('/users', data).then((response) => {
-            console.log(response)
+        axios.post('https://kenziehub.me/users', data).then((response) => {
+            console.log(response);
             reset();
             history.push('/')
         }).catch(e => console.log(e))
@@ -67,12 +68,24 @@ const FormSignup = () => {
                 <TextField
                     margin='dense'
                     variant='outlined'
-                    label='Cellphone'
+                    label='Bio'
                     size='medium'
                     color='primary'
-                    {...register('cellphone')}
-                    error={!!errors.cellphone}
-                    helperText={errors.cellphone?.message}
+                    {...register('bio')}
+                    error={!!errors.bio}
+                    helperText={errors.bio?.message}
+                />
+            </div>
+            <div>
+                <TextField
+                    margin='dense'
+                    variant='outlined'
+                    label='Contact'
+                    size='medium'
+                    color='primary'
+                    {...register('contact')}
+                    error={!!errors.contact}
+                    helperText={errors.contact?.message}
                 />
             </div>
             <div>
@@ -82,9 +95,9 @@ const FormSignup = () => {
                     label='Course Module'
                     size='medium'
                     color='primary'
-                    {...register('courseModule')}
-                    error={!!errors.courseModule}
-                    helperText={errors.courseModule?.message}
+                    {...register('course_module')}
+                    error={!!errors.course_module}
+                    helperText={errors.course_module?.message}
                 />
             </div>
             <div>
