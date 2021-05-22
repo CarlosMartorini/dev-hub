@@ -11,7 +11,7 @@ const FormSignup = () => {
     const schema = yup.object().shape({
         name: yup.string().required('Name is required!'),
         email: yup.string().email().required('Email is required!'),
-        cellphone: yup.string().required('Cellphone is required!'),
+        cellphone: yup.string(),
         courseModule: yup.string().required('Course module is required!'),
         password: yup
         .string()
@@ -19,7 +19,7 @@ const FormSignup = () => {
         .matches(
             /^((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
          'Password must contain at least one uppercase letter, one lowercase letter, a number and a special character!')
-         .required('Password confirm is required!'),
+        .required('Password confirm is required!'),
         passwordConfirm: yup.string().oneOf([yup.ref('password')], 'Passwords don`t match!').required('Password confirm is required!')
     })
 
@@ -115,7 +115,7 @@ const FormSignup = () => {
                     variant='contained' 
                     color='primary'
                     style={{width:'230px', margin:'40px'}}
-                >Send</Button>
+                >Signup</Button>
             </div>
         </form>
     )
