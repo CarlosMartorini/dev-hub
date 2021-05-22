@@ -1,11 +1,11 @@
 import FuncHome from '../../components/FuncHome';
 
-const Home = () => {
+const Home = ({setIsAuthenticated}) => {
 
     return(
         <>
         <h1>Home</h1>
-        <FuncHome/>
+        <FuncHome setIsAuthenticated={setIsAuthenticated}/>
         </>
     )
 }

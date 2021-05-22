@@ -1,12 +1,18 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import { Redirect } from 'react-router';
 
-const FuncHome = () => {
+const FuncHome = ({setIsAuthenticated}) => {
 
     const [ user, setUser ] = useState({});
     const [ token, setToken ] = useState(() => {
         const getLocalToken = localStorage.getItem('@KenzieHub:token') || 'Provisional token';
-        return JSON.parse(getLocalToken);
+        if (!getLocalToken) {
+            return '';
+        } else {
+            setIsAuthenticated(true);
+            return JSON.parse(getLocalToken);
+        }
     });
 
     useEffect(() => {
@@ -16,6 +22,10 @@ const FuncHome = () => {
         .then((response) => setUser(response.data))
         .catch((e) => console.log(e))
     }, [])
+
+    if (!token) {
+        return <Redirect to='/signup'/>
+    }
 
     return(
         <h3>{user.name}</h3>
