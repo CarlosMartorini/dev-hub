@@ -1,7 +1,8 @@
 import {AppBar, Toolbar, MenuItem } from '@material-ui/core';
+import { SendTwoTone } from '@material-ui/icons';
 import { useHistory } from 'react-router-dom';
 
-const Menu = () => {
+const Menu = ({isAuthenticated, setIsAuthenticated}) => {
 
     const history = useHistory();
 
@@ -9,12 +10,34 @@ const Menu = () => {
         history.push(path);
     }
 
+    const handleExitApplication = () => {
+        localStorage.clear();
+        setIsAuthenticated(false);
+        handleOnClick('/');
+    }
+
     return(
         <AppBar position='static'>
             <Toolbar>
-                <MenuItem onClick={() => handleOnClick('/')}>Login</MenuItem>
-                <MenuItem onClick={() => handleOnClick('/signup')}>Signup</MenuItem>
-                <MenuItem onClick={() => handleOnClick('/home')}>Home</MenuItem>
+                {
+                    isAuthenticated 
+                    ?
+                    (
+                        <>
+                            <MenuItem onClick={() => handleOnClick('/home')}>Home</MenuItem>
+                            <MenuItem onClick={handleExitApplication}>Exit</MenuItem>    
+                        </>
+                    )
+                    :
+                    (
+                        <>
+                            <MenuItem onClick={() => handleOnClick('/')}>Login</MenuItem>
+                            <MenuItem onClick={() => handleOnClick('/signup')}>Signup</MenuItem>
+                        </>
+                    )
+                }
+                
+                
             </Toolbar>
         </AppBar>
     )
