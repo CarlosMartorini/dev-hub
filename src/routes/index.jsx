@@ -2,6 +2,7 @@ import { Switch, Route } from 'react-router-dom';
 import Home from '../pages/Home';
 import Signup from '../pages/Signup';
 import Login from '../pages/Login';
+import NotFound from '../pages/NotFound';
 
 const Routes = () => {
     return(
@@ -14,6 +15,9 @@ const Routes = () => {
             </Route>
             <Route path='/home'>
                 <Home/>
+            </Route>
+            <Route>
+                <NotFound/>
             </Route>
         </Switch>
     )
