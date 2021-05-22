@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useHistory } from 'react-router';
+import api from '../../services/api';
 
 const FormLogin = () => {
 
@@ -25,8 +26,14 @@ const FormLogin = () => {
 
     const handleForm = (data) => {
         console.log(data);
-        reset();
-        history.push('/home')
+        api.post('/sessions', data).then((response) => {
+            console.log(response);
+            localStorage.clear();
+            const { token } = response.data;
+            localStorage.setItem('@KenzieHub:token', JSON.stringify(token))
+            reset();
+            history.push('/home');
+        }).catch(e => console.log(e))
     }
 
     return(
