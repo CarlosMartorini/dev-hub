@@ -1,6 +1,11 @@
+import FormSignup from '../../components/FormSignup';
+
 const Signup = () => {
     return(
-        <h1>Signup</h1>
+        <>
+            <h1>Signup</h1>
+            <FormSignup/>
+        </>
     )
 }
 
