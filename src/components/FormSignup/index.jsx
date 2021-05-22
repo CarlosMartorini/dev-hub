@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useHistory } from 'react-router';
+import api from '../../services/api';
 
 const FormSignup = () => {
 
@@ -29,8 +30,11 @@ const FormSignup = () => {
 
     const handleForm = (data) => {
         console.log(data);
-        reset();
-        history.push('/')
+        api.post('/users', data).then((response) => {
+            console.log(response)
+            reset();
+            history.push('/')
+        }).catch(e => console.log(e))
     }
 
     return(
