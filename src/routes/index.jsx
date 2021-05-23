@@ -4,7 +4,7 @@ import Signup from '../pages/Signup';
 import Login from '../pages/Login';
 import NotFound from '../pages/NotFound';
 
-const Routes = () => {
+const Routes = ({setIsAuth}) => {
     return(
         <Switch>
             <Route exact path='/'>
@@ -14,7 +14,7 @@ const Routes = () => {
                 <Signup/>
             </Route>
             <Route path='/home'>
-                <Home/>
+                <Home setIsAuth={setIsAuth}/>
             </Route>
             <Route>
                 <NotFound/>
