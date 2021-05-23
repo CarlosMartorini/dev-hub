@@ -25,12 +25,13 @@ const FormLogin = () => {
     });
 
     const handleForm = (data) => {
-        console.log(data);
         axios.post('https://kenziehub.me/sessions', data).then((response) => {
             console.log(response);
             localStorage.clear();
-            const { token } = response.data;
+            const { token, user } = response.data;
             localStorage.setItem('@KenzieHub:token', JSON.stringify(token))
+            localStorage.setItem('@KenzieHub:user', JSON.stringify(user))
+            console.log(user)
             reset();
             history.push('/home');
         }).catch(e => console.log(e))

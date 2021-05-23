@@ -1,11 +1,12 @@
 import FuncHome from '../../components/FuncHome';
+import FuncTechs from '../../components/FuncTechs';
 
 const Home = ({setIsAuthenticated}) => {
 
     return(
         <>
-        <h1>Home</h1>
-        <FuncHome setIsAuthenticated={setIsAuthenticated}/>
+            <FuncHome setIsAuthenticated={setIsAuthenticated}/>
+            <FuncTechs/>
         </>
     )
 }
