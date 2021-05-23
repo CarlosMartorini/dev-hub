@@ -12,7 +12,7 @@ function App() {
       <header className="App-header">
         <Menu isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated}/>
       </header>
-      <Routes setIsAuthenticated={setIsAuthenticated}/>
+      <Routes/>
     </div>
   );
 }
