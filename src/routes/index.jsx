@@ -4,7 +4,7 @@ import Signup from '../pages/Signup';
 import Login from '../pages/Login';
 import NotFound from '../pages/NotFound';
 
-const Routes = ({setIsAuthenticated}) => {
+const Routes = () => {
     return(
         <Switch>
             <Route exact path='/'>
@@ -14,7 +14,7 @@ const Routes = ({setIsAuthenticated}) => {
                 <Signup/>
             </Route>
             <Route path='/home'>
-                <Home setIsAuthenticated={setIsAuthenticated}/>
+                <Home/>
             </Route>
             <Route>
                 <NotFound/>

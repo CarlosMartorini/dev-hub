@@ -7,7 +7,9 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
-const Home = ({setIsAuthenticated}) => {
+const Home = () => {
+    
+    const [ isAuthenticated, setIsAuthenticated ] = useState(false);
 
     const [ user, setUser ] = useState({});
     const [ token ] = useState(() => {
@@ -51,6 +53,14 @@ const Home = ({setIsAuthenticated}) => {
         }).catch(e => console.log(e))
     }
 
+    const handleDelete = (techId) => {
+        axios.delete('https://kenziehub.me/users/techs/:tech_id', techId).then((response) => {
+            setTechs(...techs, 
+                techs.filter(techId).pop()
+            )
+        }).catch(e => console.log(e));
+    }
+
     useEffect(() => {
         loadTechs()
         axios.get('https://kenziehub.me/profile', {
@@ -59,14 +69,6 @@ const Home = ({setIsAuthenticated}) => {
         .then((response) => setUser(response.data))
         .catch((e) => console.log(e));
     }, [])
-
-    const handleDelete = (techId) => {
-        axios.delete('https://kenziehub.me/users/techs/:tech_id', techId).then((response) => {
-            setTechs(...techs, 
-                techs.filter(techId).pop()
-            )
-        }).catch(e => console.log(e));
-    }
 
     if (!token) {
         return <Redirect to='/signup'/>
