@@ -7,9 +7,8 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
-const Home = () => {
+const Home = ({setIsAuth}) => {
     
-    const [ isAuthenticated, setIsAuthenticated ] = useState(false);
 
     const [ user, setUser ] = useState({});
     const [ token ] = useState(() => {
@@ -17,7 +16,7 @@ const Home = () => {
         if (!getLocalToken) {
             return '';
         } else {
-            setIsAuthenticated(true);
+            setIsAuth(true);
             return JSON.parse(getLocalToken);
         }
     });
