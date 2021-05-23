@@ -1,0 +1,16 @@
+.appbar {
+    border-radius: 8px;
+    box-shadow: 0.5px 0.5px 10px -3px #ffffff;
+    /* align-items: center; */
+}
+
+.toolbar {
+    align-items: center;
+    text-align: center;
+}
+
+.title {
+    color: #ffffff;
+    text-shadow: 5px 5px 5px #0f1e3d;
+    margin: 20px;
+}

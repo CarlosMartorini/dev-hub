@@ -1,6 +1,6 @@
 import {AppBar, Toolbar, MenuItem } from '@material-ui/core';
-import { SendTwoTone } from '@material-ui/icons';
 import { useHistory } from 'react-router-dom';
+import './styles.css';
 
 const Menu = ({isAuthenticated, setIsAuthenticated}) => {
 
@@ -17,8 +17,9 @@ const Menu = ({isAuthenticated, setIsAuthenticated}) => {
     }
 
     return(
-        <AppBar position='static'>
-            <Toolbar>
+        <AppBar position='static' className='appbar'>
+            <Toolbar className='toolbar'>
+            <h3 className='title'>Kenzie Hub</h3>
                 {
                     isAuthenticated 
                     ?
@@ -35,9 +36,7 @@ const Menu = ({isAuthenticated, setIsAuthenticated}) => {
                             <MenuItem onClick={() => handleOnClick('/signup')}>Signup</MenuItem>
                         </>
                     )
-                }
-                
-                
+                }     
             </Toolbar>
         </AppBar>
     )
