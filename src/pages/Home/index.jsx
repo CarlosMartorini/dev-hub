@@ -12,19 +12,20 @@ const Home = ({setIsAuth}) => {
     
     const [ user, setUser ] = useState({});
     const getUser = JSON.parse(localStorage.getItem('@KenzieHub:user'))
-    const [ token ] = useState(() => {
-        const getLocalToken = localStorage.getItem('@KenzieHub:token') || 'Provisional token';
+
+    const getToken = () => {
+        const getLocalToken = localStorage.getItem('@KenzieHub:token') || '';
         if (!getLocalToken) {
             return '';
         } else {
             setIsAuth(true);
             return JSON.parse(getLocalToken);
         }
-    });
+    }
 
-    console.log(getUser)
+    const [ token ] = useState(() => getToken());
+
     const {techs} = getUser;
-    console.log(techs);
 
     const schema = yup.object().shape({
         title: yup.string().required('Title is required!'),
@@ -58,7 +59,7 @@ const Home = ({setIsAuth}) => {
         })
         .then((response) => setUser(response.data))
         .catch((e) => console.log(e));
-    }, [])
+    }, [token])
 
     const [ techList ] = useState(techs);
     console.log(techList);
