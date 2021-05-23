@@ -9,8 +9,8 @@ import * as yup from 'yup';
 
 const Home = ({setIsAuth}) => {
     
-
     const [ user, setUser ] = useState({});
+    const getUser = JSON.parse(localStorage.getItem('@KenzieHub:user'))
     const [ token ] = useState(() => {
         const getLocalToken = localStorage.getItem('@KenzieHub:token') || 'Provisional token';
         if (!getLocalToken) {
@@ -21,7 +21,9 @@ const Home = ({setIsAuth}) => {
         }
     });
 
-    const [ techs, setTechs ] = useState([]);
+    console.log(getUser)
+    const {techs} = getUser;
+    console.log(techs);
 
     const schema = yup.object().shape({
         title: yup.string().required('Title is required!'),
@@ -32,36 +34,24 @@ const Home = ({setIsAuth}) => {
         resolver: yupResolver(schema)
     });
 
-    const loadTechs = () => {
-        axios.get('https://kenziehub.me/users/:users_id', {
-            headers: {Authorization: `Bearer ${token}`}
-        })
-        .then((response) => setTechs(response.data.techs));
-    }
-
     const handleForm = (tech) => {
-        axios.post('https://kenziehub.me/users/techs', {
+        axios.post(`https://kenziehub.me/users/techs`, {
             title: tech.title,
             status: tech.status
         }, {
             headers: {Authorization: `Bearer ${token}`}
         }).then((response) => {
             console.log(response);
-            loadTechs();
             reset();
         }).catch(e => console.log(e))
     }
 
-    const handleDelete = (techId) => {
-        axios.delete('https://kenziehub.me/users/techs/:tech_id', techId).then((response) => {
-            setTechs(...techs, 
-                techs.filter(techId).pop()
-            )
-        }).catch(e => console.log(e));
-    }
+    // const handleDelete = (techId) => {
+    //     axios.delete(`https://kenziehub.me/users/techs/${getUser.techs.id}`, techId).then((response) => {
+    //     }).catch(e => console.log(e));
+    // }
 
     useEffect(() => {
-        loadTechs()
         axios.get('https://kenziehub.me/profile', {
             headers: { Authorization: `Bearer ${token}`}
         })
@@ -69,47 +59,49 @@ const Home = ({setIsAuth}) => {
         .catch((e) => console.log(e));
     }, [])
 
+    const [ techList ] = useState(techs);
+    console.log(techList);
+
     if (!token) {
         return <Redirect to='/signup'/>
     }
 
     return(
         <>
-            <>
-                <h3>Hello, {user.name}</h3>
+            <h3>Hello, {user.name}</h3>
 
-                <form onSubmit={handleSubmit(handleForm)}>
+            <form onSubmit={handleSubmit(handleForm)}>
                 <div style={{
                     display:'flex', 
                     flexDirection:'row',
                     flexWrap:'wrap',
                     justifyContent:'center',
                 }}>
-                    <h3 style={{marginTop:'25px'}}>Register Technology:</h3>
-                    <div style={{margin:'10px'}}>
-                        <TextField
-                            margin='dense'
-                            variant='outlined'
-                            label='Title'
-                            size='medium'
-                            color='primary'
-                            {...register('title')}
-                            error={!!errors.title}
-                            helperText={errors.title?.message}
-                        />
-                    </div>
-                    <div style={{margin:'10px'}}>
-                        <TextField
-                            margin='dense'
-                            variant='outlined'
-                            label='Status'
-                            size='medium'
-                            color='primary'
-                            {...register('status')}
-                            error={!!errors.status}
-                            helperText={errors.status?.message}
-                        />
-                    </div>
+                <h3 style={{marginTop:'25px'}}>Register Technology:</h3>
+                <div style={{margin:'10px'}}>
+                    <TextField
+                        margin='dense'
+                        variant='outlined'
+                        label='Title'
+                        size='medium'
+                        color='primary'
+                        {...register('title')}
+                        error={!!errors.title}
+                        helperText={errors.title?.message}
+                    />
+                </div>
+                <div style={{margin:'10px'}}>
+                    <TextField
+                        margin='dense'
+                        variant='outlined'
+                        label='Status'
+                        size='medium'
+                        color='primary'
+                        {...register('status')}
+                        error={!!errors.status}
+                        helperText={errors.status?.message}
+                    />
+                </div>
                 <div>
                     <Button 
                         type='submit' 
@@ -120,19 +112,23 @@ const Home = ({setIsAuth}) => {
                 </div>
                 </div>
             </form>
+
             <div>
                 {
-                    techs.map((tech) => (
-                        <div key={tech.id}>
-                            <h3>{tech.title} - {tech.status}</h3>
-                            <IconButton aria-label="delete" color='secondary' onClick={handleDelete(tech.tech_id)}>
+                    techList.length > 0 
+                    ?
+                    techList.map((element) => (
+                        <div key={element.id}>
+                            <h3>{element.title} - {element.status}</h3>
+                            {/* <IconButton aria-label="delete" color='secondary' onClick={handleDelete(element.id)}>
                                 <DeleteIcon fontSize="large"/>
-                            </IconButton>
+                            </IconButton> */}
                         </div>
                     ))
+                    :
+                    <span>No technologies found!</span>
                 }
             </div>
-            </>
         </>
     )
 }
